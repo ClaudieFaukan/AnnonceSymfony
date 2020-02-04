@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<h1>Liste des rubriques</h1>
+{% for rubrique in rubriques %}
+
+    <div class="content">
+        <a href="{{ path('annonce_rubrique',{'id' : rubrique.id}) }}">{{ rubrique.label }}</a>
+    </div>
+    <hr>
+    
+{% endfor %}
+
+{% if app.user.admin is defined %}
+
+    {% if app.user.admin == 1 %}
+        <a href="{{ path('create_rubrique') }}"><button class="btn btn-success">Ajouter une rubrique</button></a>
+    {% endif %}
+
+{% endif %}
+
+{% endblock %}

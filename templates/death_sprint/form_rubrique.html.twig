@@ -1,0 +1,31 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+{% if app.user.admin is defined %}
+
+    <h1>Création d'une rubrique</h1>
+
+    {{ form_start(form) }}
+
+    {{ form_row(form, {'label': 'Titre de la rubrique','attr': {'placeholder':"Titre de la rubrique"}})  }}
+
+    <button class="btn btn-success">
+        {% if editMode %}
+            Modifier la rubrique
+        {% else %}
+            Ajouter la rubrique
+        {% endif %}
+    </button>
+
+    {{ form_end(form) }}
+
+{% else %}
+
+    <p>Vous devez être administrateur pour ajouter ou modifier une rubrique</p>
+
+    <a href="{{ path('security_login') }}" class="btn btn-primary">Connectez-vous</a>
+
+{% endif %}
+
+{% endblock %}

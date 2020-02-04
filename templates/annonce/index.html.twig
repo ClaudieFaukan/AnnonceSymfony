@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos annonces{% endblock %}
+
+{% block body %}
+    <div id='livesearch'></div>
+    <section class="article">
+        {% for annonce in annonces %}
+            <article>
+                <h2>{{annonce.title}}</h2>
+                <div class="metadata">Déposée le {{annonce.depositDate | date('d/m/Y')}} à {{annonce.depositDate | date('H:i')}} 
+                dans la rubrique {{annonce.rubrique.label}} </div>
+                    <div class="content">
+                    {% for img in image %}
+                        {% if img.annonce.id == annonce.id %}
+                            <img src="{{asset(img.path)}}" alt="ça ne marche paaaaaaaaaaaaaas">
+                        {% endif %}                
+                    {% endfor %}
+                    <p>{{annonce.content}}</p>
+                    <h6>Postée par {{annonce.user.firstName}}</h6>
+                    <a href="{{path('annonces_show' ,{'id':annonce.id})}}" class="btn btn-primary">Voir l'annonce</a>
+                    {% if app.user.admin is defined %}
+                        {% if app.user.admin == 1 %}
+                            <a href="{{path('annonce_edit' ,{'id':annonce.id})}}" class="btn btn-warning">Modifier l'annonce</a>
+                            <a href="{{path('annonce_delete' ,{'id':annonce.id})}}" class="btn btn-danger">Supprimer l'annonce</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </article>
+        {% endfor %}
+    </section>
+{% endblock %}

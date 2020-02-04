@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Annonce
+{% endblock %}
+
+{% block body %}
+
+
+<article>
+		<h1>{{annonce.title}}</h1>
+		postée dans la rubrique {{annonce.rubrique.label}}
+
+		<div class="content">
+			{% for img in image %}
+                {% if img.annonce.id == annonce.id %}
+                    <img src="{{asset(img.path)}}" alt="">
+                {% endif %}
+            {% endfor %}
+			{{annonce.content}}
+		</div>
+		deposée le {{annonce.depositDate | date('d/m/Y')}}
+		
+		écrite par {{annonce.user.firstName}} {{annonce.user.lastName}}
+		<br>
+		Annonce vue : {{annonce.visit}} fois
+
+
+	</article>
+
+{% endblock %}

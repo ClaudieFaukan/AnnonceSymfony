@@ -1,0 +1,46 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<div class="content">
+<h2>Nom de la rubrique : {{rubrique.label}}</h2>
+</div>
+
+{% if app.user.admin is defined %}
+    {% if app.user.admin == 1  %}
+        <div class="content">
+            <a href="{{ path('modification_rubrique',{'id' : rubrique.id})}}"><button class="btn btn-success">Modifier la rubrique</button></a>
+            <a href="{{ path('delete_rubrique',{'id' : rubrique.id})}}"><button class="btn btn-danger">Supprimer la rubrique</button></a>
+        </div>
+    {% endif %}
+ {% endif %}
+
+<hr>
+<h4>Annonces de la rubrique :</h4>
+<hr>
+    <section class="article">
+{% for annonce in annonces %}
+    <article>
+        <h2>{{annonce.title}}</h2>
+       
+        <div class="content">
+            <img src="https://placehold.it/250x250" alt="">
+            <p>{{annonce.content}}</p>
+            <p>Postée par {{ annonce.user.firstname }} {{ annonce.user.lastname }} le {{annonce.expirationdate | date('d/m/Y') }} </p>
+      
+            <a href="{{path('annonces_show' ,{'id':annonce.id})}}" class="btn btn-primary">Voir l'annonce</a>
+
+            {% if app.user.admin is defined %}
+                {% if app.user.admin == 1 %}
+                    <a href="{{path('annonce_edit' ,{'id':annonce.id})}}" class="btn btn-warning">Modifier l'annonce</a>
+                    <a href="{{path('annonce_delete' ,{'id':annonce.id})}}" class="btn btn-danger">Supprimer l'annonce</a>
+                {% endif %}
+            {% endif %}
+             
+        </div>
+    </article>
+    <hr>
+    <hr>
+{% endfor %}
+
+{% endblock %}
